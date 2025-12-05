@@ -1,0 +1,43 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Cloned VibeVoice repository (downloaded by setup.sh)
+vibevoice-repo/
+
+# Downloaded voice files
+backend/voices/*.pt
+
+# Generated audio files
+backend/outputs/*.wav
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+server.log
+
+# PID files
+.server.pid
+
+# HuggingFace cache (if local)
+.cache/
+
+# Claude Code
+.claude/

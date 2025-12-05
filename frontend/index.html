@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeVoice TTS</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10' fill='url(%23g)'/%3E%3Cpath d='M8 9.5v5M11 8v8M14 10v4M17 9v6' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='10' fill='url(%23g)'/%3E%3Cpath d='M8 9.5v5M11 8v8M14 10v4M17 9v6' stroke='white' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Overlay (shown during model initialization) -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-overlay-content">
+            <div class="loading-overlay-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="url(#gradient2)"/>
+                    <path d="M8 9.5v5M11 8v8M14 10v4M17 9v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="gradient2" x1="2" y1="2" x2="22" y2="22">
+                            <stop stop-color="#6366f1"/>
+                            <stop offset="1" stop-color="#a855f7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h2>VibeVoice</h2>
+            <div class="loading-overlay-spinner">
+                <div class="spinner"></div>
+            </div>
+            <p class="loading-overlay-message" id="loadingMessage">Connecting to server...</p>
+            <p class="loading-overlay-hint">First run downloads the model (~1GB)</p>
+        </div>
+    </div>
+
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="url(#gradient1)"/>
+                        <path d="M8 9.5v5M11 8v8M14 10v4M17 9v6" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="2" y1="2" x2="22" y2="22">
+                                <stop stop-color="#6366f1"/>
+                                <stop offset="1" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <h1>VibeVoice</h1>
+            </div>
+            <div class="status-badge" id="statusBadge">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Input Section -->
+                <section class="input-section">
+                    <div class="section-header">
+                        <h2>Text to Speech</h2>
+                        <span class="char-count"><span id="charCount">0</span> / 5000</span>
+                    </div>
+                    <div class="textarea-wrapper">
+                        <textarea
+                            id="textInput"
+                            placeholder="Enter your text here... (English or Chinese)"
+                            maxlength="5000"
+                        ></textarea>
+                        <button class="clear-btn" id="clearBtn" title="Clear text">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="voice-select-row">
+                        <label for="voiceSelect">Voice:</label>
+                        <select id="voiceSelect" class="voice-select">
+                            <option value="emma">Loading voices...</option>
+                        </select>
+                    </div>
+                    <div class="actions">
+                        <button class="btn btn-primary" id="synthesizeBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5 3 19 12 5 21 5 3"/>
+                            </svg>
+                            <span>Generate Speech</span>
+                        </button>
+                        <div class="sample-texts">
+                            <span>Try:</span>
+                            <button class="sample-btn" data-text="Hello! Welcome to VibeVoice, a cutting-edge text-to-speech system powered by artificial intelligence.">English Sample</button>
+                            <button class="sample-btn" data-text="你好！欢迎使用VibeVoice，这是一个由人工智能驱动的先进文本转语音系统。">中文示例</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Output Section -->
+                <section class="output-section" id="outputSection">
+                    <div class="section-header">
+                        <h2>Generated Audio</h2>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loadingState">
+                        <div class="loader">
+                            <div class="loader-wave">
+                                <span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <p>Generating speech...</p>
+                    </div>
+
+                    <!-- Audio Player -->
+                    <div class="audio-player" id="audioPlayer">
+                        <div class="waveform" id="waveform">
+                            <canvas id="waveformCanvas"></canvas>
+                        </div>
+                        <div class="player-controls">
+                            <button class="play-btn" id="playBtn">
+                                <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <polygon points="5 3 19 12 5 21 5 3"/>
+                                </svg>
+                                <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <rect x="6" y="4" width="4" height="16"/>
+                                    <rect x="14" y="4" width="4" height="16"/>
+                                </svg>
+                            </button>
+                            <div class="progress-container">
+                                <div class="time-display">
+                                    <span id="currentTime">0:00</span>
+                                    <span id="duration">0:00</span>
+                                </div>
+                                <div class="progress-bar" id="progressBar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                    <div class="progress-handle" id="progressHandle"></div>
+                                </div>
+                            </div>
+                            <button class="download-btn" id="downloadBtn" title="Download audio">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- History -->
+                    <div class="history" id="history">
+                        <h3>Recent Generations</h3>
+                        <div class="history-list" id="historyList"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Powered by <a href="https://github.com/microsoft/VibeVoice" target="_blank">Microsoft VibeVoice</a></p>
+        </footer>
+    </div>
+
+    <audio id="audioElement"></audio>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

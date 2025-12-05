@@ -1,0 +1,14 @@
+# VibeVoice TTS Web App Requirements
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+scipy>=1.11.0
+
+# VibeVoice dependencies
+torch>=2.0.0
+transformers>=4.51.3
+accelerate>=1.6.0
+huggingface-hub
+numpy
+librosa
+tqdm
