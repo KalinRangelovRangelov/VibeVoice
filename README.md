@@ -2,6 +2,12 @@
 
 A modern web interface for Microsoft's VibeVoice text-to-speech model, optimized for Apple Silicon.
 
+> **Generated with [Claude Opus 4.5](https://www.anthropic.com/claude)** - 
+
+## Demo
+
+<!-- Upload Demo.mp4 to GitHub: drag & drop into this file on github.com, then replace this comment with the generated URL -->
+
 ## Requirements
 
 - Python 3.9+
