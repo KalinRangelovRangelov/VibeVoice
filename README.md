@@ -6,7 +6,8 @@ A modern web interface for Microsoft's VibeVoice text-to-speech model, optimized
 
 ## Demo
 
-<!-- Upload Demo.mp4 to GitHub: drag & drop into this file on github.com, then replace this comment with the generated URL -->
+https://github.com/user-attachments/assets/be9fd52d-fabf-43ae-b413-65f529330093
+
 
 ## Requirements
 
